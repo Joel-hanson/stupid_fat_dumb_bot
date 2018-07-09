@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>funbot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+        crossorigin="anonymous"></script> ￼
+<style>
+html{
+background: #FF512F; /* fallback for old browsers */ background: -webkit-linear-gradient(to right, #DD2476, #FF512F); /*
+Chrome 10-25, Safari 5.1-6 */ background: linear-gradient(to right, #DD2476, #FF512F); /* W3C, IE 10+/ Edge, Firefox 16+,
+Chrome 26+, Opera 12+, Safari 7+ */
+
+
+}
+ .margin-zero{
+     margin: 0;
+
+ }
+ .bck-color{
+ background: #484848; color: white;
+ }
+</style>
+</head>
+<body>
+<div class="container" style="margin-top: 60px;">
+    <div class="card center">
+        <div class="card-title card-panel bck-color">
+            <div class="row">
+                <div class="col s3 m4 l4">Chat id</div>
+                <div class="col s3 m4 l4">Full name</div>
+                <div class="col s6 m4 l4">
+                    <div class="col s4 m4 l4">Fat</div>
+                    <div class="col s4 m4 l4">Dumb</div>
+                    <div class="col s4 m4 l4">Stupid</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m12 l12" id="append-id">
+        
+    </div>
+</div>
+        
+</body>
+<script>
+var data = "{{chat_logs}}"
+var users = "{{chat_users}}"
+$(function () {
+    if (data.includes("&#39;")) {
+        data = JSON.parse(data.replace(/&#39;/gi, '"'))
+        users = JSON.parse(users.replace(/&#39;/gi, '"'))
+    } else {
+data = JSON.parse(data)
+users = JSON.parse(users)
+
+    }
+    
+    for (let index = 0; index < users.length; index++) {
+        let element = users[index];
+        console.log(element);
+        
+        div_append = '<div class="card horizontal margin-zero">\
+                    <div class="card-stacked">\
+                    <div class="card-content center ">\
+                    <div class="row" id='+element['chat_id']+'>'
+        div_close = '</div>\
+                </div>\
+                </div>\
+                </div>'
+        center_div = '<div class="col s4 m4 l4">'+element['chat_id']+'</div>\
+                <div class="col s4 m4 l4">'+element['first_name']+' '+element['last_name']+'</div>\
+                <div class="col s4 m4 l4">\
+                    <div class="col s4 m4 l4" id="fat'+ element['chat_id']+'">0</div>\
+                    <div class="col s4 m4 l4" id="dumb'+ element['chat_id'] +'">0</div>\
+                    <div class="col s4 m4 l4" id="stupid'+ element['chat_id'] +'">0</div>\
+                </div>'
+        $('#append-id').append(div_append+center_div+div_close);
+    }
+    data.forEach(element => {
+        if (element['button'] == 'fat') {
+        $('#fat'+element['chat_id']).text(element['numberofcalls']);
+        } else if (element['button'] == 'dumb') {
+        $('#dumb'+element['chat_id']).text(element['numberofcalls']);
+        } else {
+        $('#stupid' + element['chat_id']).text(element['numberofcalls']);
+        }
+    });
+});
+
+    
+                    
+                    
+</script>
+</html>

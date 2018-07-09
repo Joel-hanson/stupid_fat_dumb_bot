@@ -1,0 +1,4 @@
+postgres database name = tele_bot
+url for webhook = chat_api/
+url for chat log = /
+telegram bot name = @stupid_fat_dumb_bot
